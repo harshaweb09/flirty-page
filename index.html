@@ -1,1 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flirty Web Page</title>
+    <style>
+      body {
+    margin: 0;
+    padding: 0; 
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
+    color: #fff;
+    text-align: center;
+}
 
+.container {
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.intro {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.flirt-button {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    color: #FF1493;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.flirt-button:hover {
+    transform: scale(1.05);
+    background-color: #FFB6C1;
+}
+
+.response {
+    margin-top: 20px;
+    font-size: 1.5em;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Hey Gorgeous!</h1>
+        <p class="intro">I wasn’t prepared for you, but I’m definitely curious now. 😉
+           </p>
+        <button id="flirtButton" class="flirt-button">Want to hear something sweet?</button>
+        <p id="response" class="response"></p>
+    </div>
+
+    <script>
+      const flirtButton = document.getElementById('flirtButton');
+const response = document.getElementById('response');
+
+const flirtyMessages = [
+    "Are you made of copper and tellurium? Because you're Cu-Te! 💖",
+    "Do you have a name, or can I call you mine? 😘",
+    "Are you a magician? Because whenever I look at you, everyone else disappears. 🎩✨",
+    "If beauty were time, you'd be an eternity. ⏳",
+    "Do you believe in love at first sight, or should I walk by again? 😉",
+    "Is your name Google? Because you have everything I’ve been searching for. 🥰",
+    "Are you a campfire? Because you’re hot and I want s’more. 🔥",
+    "Do you have a map? I keep getting lost in your eyes. 🗺️",
+    "If you were a vegetable, you’d be a cute-cumber! 🥒",
+    "Are you French? Because Eiffel for you. 🗼",
+    "Is your dad a boxer? Because you’re a knockout! 🥊",
+    "Can I follow you home? Cause my parents always told me to follow my dreams. 🌟",
+    "Is your name Wi-Fi? Because I’m feeling a connection. 📶",
+    "Do you have a Band-Aid? Because I just scraped my knee falling for you. 🩹",
+    "If you were a fruit, you’d be a fineapple. 🍍",
+    "Are you made of sugar? Because you’re sweet! 🍭",
+    "If you were a flower, you’d be a damn-delion. 🌼",
+    "Can I borrow a kiss? I promise I’ll give it back. 💋",
+    "Do you have a sunburn, or are you always this hot? ☀️",
+    "Are you a parking ticket? Because you’ve got FINE written all over you. 📝",
+    "Is it hot in here, or is it just you? 🌡️",
+    "Are you a time traveler? Because I see you in my future. 🕰️",
+    "If I could rearrange the alphabet, I’d put U and I together. 🔠",
+    "Are you an angel? Because heaven is missing one. 😇",
+    "Did it hurt? When you fell from heaven? 🌟",
+    "Is your smile made of magic? Because whenever you smile, everything around you sparkles. ✨",
+    "Are you a star? Because your beauty lights up the night. 🌟",
+    "Is there a rainbow today? I just found the treasure I’ve been searching for. 🌈",
+    "Do you like science? Because I've got my ion you. 🔬",
+    "Is your last name Gillette? Because you’re the best a man can get. 🪒",
+    "Are you a loan from a bank? Because you’ve got my interest! 💸",
+    "Do you have a pencil? Cause I want to erase your past and write our future. ✏️",
+    "If I were a cat, I’d spend all 9 lives with you. 🐱",
+    "Are you a light bulb? Because you brighten up my day. 💡",
+    "Are you a camera? Every time I look at you, I smile. 📸",
+    "Are you a snowstorm? Because you’ve just made my heart freeze. ❄️",
+    "Do you have a quarter? Because you make me wanna call my mom and tell her I’ve met The One. ☎️",
+    "If looks could kill, you’d be a mass murderer. 💣",
+    "If you were a Transformer, you’d be Optimus Fine. 🤖",
+    "Do you have a library card? Because I’m checking you out. 📚",
+    "Are you a volcano? Because I lava you. 🌋",
+    "Are you an artist? Because you’re drawing me in. 🎨",
+    "Are you a secret? Because I can’t keep you to myself. 🤐",
+    "Is your name Chapstick? Because you’re da balm. 💄",
+    "Are you a 45-degree angle? Because you’re acute-y. 📐",
+    "If you were a triangle, you’d be acute one. 🔺",
+    "Is your name Summer? Because you’re hot! ☀️",
+    "If you were a dessert, you’d be a tiramisu—because you lift me up! 🍰",
+    "Are you a wizard? Because when I look at you, everyone else disappears. 🧙‍♂️",
+    "Are you a beaver? Because daaaaam. 🦫",
+    "Is your name Ariel? Because we mermaid for each other. 🧜‍♀️",
+    "Are you a locksmith? Because you have the key to my heart. 🔐",
+    "Do you have a sunburn? Or are you always this hot? ☀️",
+    "Are you a puzzle? Because you complete me. 🧩",
+    "If you were words on a page, you’d be fine print. 📄",
+    "Are you a magnet? Because I’m attracted to you. 🧲",
+    "Are you a Jedi? Because you’ve got me Skywalking on Cloud 9. 🌌",
+    "Is your name Dunkin? Because you’re making me go nuts. 🍩",
+    "Are you a mermaid? Because you’re making waves in my heart. 🌊",
+    "Is your name Sugar? Because you’re sweet and I crave you. 🍬",
+    "Are you a diamond? Because you’re my precious. 💍",
+    "Are you an alien? Because you just abducted my heart. 👽",
+    "Are you a book? Because I can't put you down. 📖",
+    "Are you a baker? Because you're making my heart rise. 🍞",
+    "Are you a sunflower? Because you’re bright and cheery, and you make me smile. 🌻",
+    "Are you a melody? Because you’re stuck in my head. 🎶",
+    "Are you a butterfly? Because you give me butterflies. 🦋",
+    "Are you lightning? Because whenever I see you, I’m shocked. ⚡",
+    "Are you a shooting star? Because my wishes have all come true. 🌠",
+    "Are you a cloud? Because you’ve got a silver lining. ☁️",
+    "Is your name Karma? Because you’re getting back what I’ve been giving. 🔄",
+    "Are you a spark? Because you’ve ignited something in me. 🔥",
+    "Are you an eclipse? Because you’ve overshadowed everyone else. 🌘",
+    "Are you a river? Because my love for you just keeps on flowing. 🏞️",
+    "Are you a gem? Because you shine so bright. 💎",
+    "Are you a compass? Because I can’t seem to find my way without you. 🧭",
+    "Are you a satellite? Because my world revolves around you. 🛰️",
+    "Are you a shooting star? Because my heart skipped a beat when I saw you. 🌠",
+    "Are you a surfer? Because you’ve caught my heart’s wave. 🏄‍♂️",
+    "Are you a firefly? Because you light up my world. 🌟",
+    "Are you a prism? Because you bring color to my life. 🌈",
+    "Are you a waterfall? Because I’m falling for you. 💧",
+    "Are you a snowflake? Because you’re one of a kind. ❄️",
+    "Are you a rainbow? Because you bring color into my life. 🌈",
+    "Are you a lighthouse? Because you guide me home. 🏮",
+    "Are you a constellation? Because you’re written in the stars. ✨",
+    "Are you a galaxy? Because I’m lost in your beauty. 🌌",
+    "Are you a poet? Because you’ve written on my heart. 📝",
+    "Are you a key? Because you unlock my heart. 🗝️",
+    "Are you a treasure map? Because I’ve been searching for you all my life. 🗺️",
+    "Are you a lullaby? Because you make my worries fade away. 🎶",
+    "Are you a melody? Because my heart beats to your tune. 🎵",
+    "Are you a canvas? Because I can see our future painted together. 🎨",
+    "Are you a miracle? Because you’ve blessed my life. 🙏",
+    "Are you a summer breeze? Because you make everything better. 🌬️",
+    "Are you a northern star? Because I’d follow you anywhere. ⭐",
+    "Are you a shooting star? Because you’ve lit up my darkest nights. 🌠"
+];
+
+flirtButton.addEventListener('click', () => {
+    const randomMessage = flirtyMessages[Math.floor(Math.random() * flirtyMessages.length)];
+    response.textContent = randomMessage;
+    response.style.opacity = 1;
+});
+    </script>
+</body>
+</html>
